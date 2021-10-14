@@ -45,6 +45,7 @@ async function handleWeather(request, response) {
       return new Forecast(weatherFileObj);
     });
     console.log(shapeOfWeather);
+    response.status(200).send(shapeOfWeather);
   }
   catch (error) {
     console.log(error);
