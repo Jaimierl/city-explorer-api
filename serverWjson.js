@@ -20,15 +20,12 @@ app.get('/', (request, response) => response.status(200).send('This is the root.
 app.get('/weather', handleWeather);
 // This sets up the weather route.
 
-// app.get('/movies', handleMovies);
-// This sets up the movies route.
-
 // No routes match error
 app.get('*', (request, response) => {
   response.status(404).send('Page not found. Sorry :(');
 });
 
-async function handleWeather(request, response) {
+function handleWeather(request, response) {
   // response.status(200).send('Weather Route Works');
 
   // Search Query Listening
@@ -36,34 +33,39 @@ async function handleWeather(request, response) {
 
   console.log('query parameters: ', request.query);
 
-  let weatherURL = ` https://api.weatherbit.io/v2.0/forecast/daily?days=3&key=${process.env.WEATHER_API_KEY}&units=I&lat=${request.query.lat}&lon=${request.query.lon}`;
+
+  // Find Method to get data from the weather array
+  let cityFinder = weather.find(element => (element.city_name.toLowerCase() === partyTown.toLowerCase()
+  ));
+
+
+  // response.send(cityFinder);
+  // This is to see the data on the local-host site
+  console.log('cityFinder: ', cityFinder);
+  // Remember console logs show up in terminal.
+
 
   try {
-    let wildWeather = await axios.get(weatherURL);
-    // console.log(wildWeather);
-    let shapeOfWeather = wildWeather.data.data.map(weatherFileObj => {
-      return new Forecast(weatherFileObj);
-    });
+    const shapeOfWeather = cityFinder.data.map(day => new Forecast(day));
+
     console.log(shapeOfWeather);
+    response.status(200).send(shapeOfWeather);
+    // The try is in sending the response not in getting the data.
   }
   catch (error) {
-    console.log(error);
-    response.status(404).send(`Sorry, no info here: ${error}`);
+    console.log('Cannot Find City');
+    response.status(500).send('Please try something a different city like Paris, Amman, or Seattle.');
   }
 }
 
-
 class Forecast {
-  constructor(weatherFileObj) {
-    this.date = weatherFileObj.datetime;
-    this.description = `Low of ${weatherFileObj.low_temp}, high of ${weatherFileObj.max_temp} with ${weatherFileObj.weather.description}`;
+  constructor(day) {
+    this.date = day.valid_date;
+    this.description = `Low of ${day.low_temp}, high of ${day.max_temp} with ${day.weather.description}`;
   }
 }
 // Take all data from line 47, put through the forecast mold, send back to line 50
 
-// async function handleMovies{
-
-// }
 
 // App.Listen aka making sure the port is set up.
 app.listen(PORT, () => console.log(`Listening on Port: ${PORT}`));
