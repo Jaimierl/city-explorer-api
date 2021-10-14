@@ -31,6 +31,24 @@ Start time: 8:30pm
 Finish time: 12am
 Actual time needed to complete: It took 30 minutes to complete plus the three hours I spent having been accidentally  locked out of my apartment
 
+Name of feature:Weather App from data Json
+Estimate of time needed to complete: 3 hours
+Start time: 9pm 10/11/21
+Finish time: 8pm 10/14/21
+Actual time needed to complete: 3 days
+
+Name of feature:Weather App from Weather API
+Estimate of time needed to complete: 5 hours
+Start time: 9pm
+Finish time: 1am
+Actual time needed to complete: 4 hours
+
+Name of feature:
+Estimate of time needed to complete: 
+Start time: 
+Finish time: 
+Actual time needed to complete: 
+
 Name of feature:
 Estimate of time needed to complete: 
 Start time: 
@@ -48,3 +66,16 @@ Estimate of time needed to complete:
 Start time: 
 Finish time: 
 Actual time needed to complete: 
+
+Name of feature:
+Estimate of time needed to complete: 
+Start time: 
+Finish time: 
+Actual time needed to complete: 
+
+Name of feature:
+Estimate of time needed to complete: 
+Start time: 
+Finish time: 
+Actual time needed to complete: 
+
