@@ -28,12 +28,12 @@ function handleWeather(request, response) {
   // response.status(200).send('Weather Route Works');
 
   // Search Query Listening
-  let { lat, lon, searchQuery } = request.query;
+  let { lat, lon, partyTown } = request.query;
 
   console.log('query parameters: ', request.query);
 
   // Find Method to get data from the weather array
-  let cityFinder = weather.find(element => (element.city_name.toLowerCase() === searchQuery.toLowerCase()
+  let cityFinder = weather.find(element => (element.city_name.toLowerCase() === partyTown.toLowerCase()
   ));
 
 
@@ -48,11 +48,11 @@ function handleWeather(request, response) {
 
     console.log(shapeOfWeather);
     response.status(200).send(shapeOfWeather);
-
+// The try is in sending the response not in getting the data.
   }
   catch (error) {
     console.log('Cannot Find City');
-    response.status(404).send('Please try something a different city like Paris, Amman, or Seattle.');
+    response.status(500).send('Please try something a different city like Paris, Amman, or Seattle.');
   }
 }
 
@@ -62,6 +62,7 @@ class Forecast {
     this.description = `Low of ${day.low_temp}, high of ${day.max_temp} with ${day.weather.description}`;
   }
 }
+// Take all data from line 47, put through the forecast mold, send back to line 50
 
 
 // App.Listen aka making sure the port is set up.
