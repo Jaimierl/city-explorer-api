@@ -4,7 +4,6 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
-const weather = require('./data/weather.json');
 const axios = require('axios');
 
 const app = express();
@@ -68,12 +67,13 @@ async function handleMovies(request, response) {
 
   console.log('query parameter: ', request.query);
 
-  let movieURL = ` https://api.themoviedb.org/3/find/${request.query.partyTown}?api_key=${process.env.MOVIE_API_KEY}&language=en-US&external_source=imdb_id`;
+  let movieURL = ` https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&query=${partyTown}`;
+  // console.log(movieURL)
 
   try {
     let movieTime = await axios.get(movieURL);
-    // console.log(movieTime);
-    let groovyMovies = movieTime.data.movie_results.map(singleFilm => {
+
+    let groovyMovies = movieTime.data.movieData.results.map(singleFilm => {
       return new Film(singleFilm);
     });
     console.log(groovyMovies);
@@ -83,7 +83,6 @@ async function handleMovies(request, response) {
     console.log(error);
     response.status(404).send(`Sorry, no movie info here: ${error}`);
   }
-
 }
 
 class Film {
@@ -92,7 +91,8 @@ class Film {
     this.overview = singleFilm.overview;
     this.average_votes = singleFilm.vote_average;
     this.total_votes = singleFilm.vote_count;
-    this.image_url = singleFilm.poster_path;
+    this.image_url = 'https://image.tmdb.org/t/p/w500' + singleFilm.poster_path;
+    // For the image URL the data would return only a partial URL. We needed to go back and figure out the base URL to make sure we would have the full image URL.
     this.popularity = singleFilm.popularity;
     this.released_on = singleFilm.release_date;
   }
