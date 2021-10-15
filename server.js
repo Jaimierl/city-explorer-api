@@ -20,7 +20,7 @@ app.get('/', (request, response) => response.status(200).send('This is the root.
 app.get('/weather', handleWeather);
 // This sets up the weather route.
 
-// app.get('/movies', handleMovies);
+app.get('/movies', handleMovies);
 // This sets up the movies route.
 
 // No routes match error
@@ -49,7 +49,7 @@ async function handleWeather(request, response) {
   }
   catch (error) {
     console.log(error);
-    response.status(404).send(`Sorry, no info here: ${error}`);
+    response.status(404).send(`Sorry, no weather info here: ${error}`);
   }
 }
 
@@ -62,9 +62,41 @@ class Forecast {
 }
 // Take all data from line 47, put through the forecast mold, send back to line 50
 
-// async function handleMovies{
+async function handleMovies(request, response) {
+  //response.status(200).send('Movie Route Works');
+  let { partyTown } = request.query;
 
-// }
+  console.log('query parameter: ', request.query);
+
+  let movieURL = ` https://api.themoviedb.org/3/find/${request.query.partyTown}?api_key=${process.env.MOVIE_API_KEY}&language=en-US&external_source=imdb_id`;
+
+  try {
+    let movieTime = await axios.get(movieURL);
+    // console.log(movieTime);
+    let groovyMovies = movieTime.data.movie_results.map(singleFilm => {
+      return new Film(singleFilm);
+    });
+    console.log(groovyMovies);
+    response.status(200).send(groovyMovies);
+  }
+  catch (error) {
+    console.log(error);
+    response.status(404).send(`Sorry, no movie info here: ${error}`);
+  }
+
+}
+
+class Film {
+  constructor(singleFilm) {
+    this.title = singleFilm.title;
+    this.overview = singleFilm.overview;
+    this.average_votes = singleFilm.vote_average;
+    this.total_votes = singleFilm.vote_count;
+    this.image_url = singleFilm.poster_path;
+    this.popularity = singleFilm.popularity;
+    this.released_on = singleFilm.release_date;
+  }
+}
 
 // App.Listen aka making sure the port is set up.
 app.listen(PORT, () => console.log(`Listening on Port: ${PORT}`));
