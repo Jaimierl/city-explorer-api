@@ -73,7 +73,7 @@ async function handleMovies(request, response) {
   try {
     let movieTime = await axios.get(movieURL);
 
-    let groovyMovies = movieTime.data.movieData.results.map(singleFilm => {
+    let groovyMovies = movieTime.data.results.map(singleFilm => {
       return new Film(singleFilm);
     });
     console.log(groovyMovies);
