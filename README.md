@@ -4,6 +4,8 @@ Server for the city-explorer app
 **Author**: Jae Loney
 **Version**: 1.0.0 
 
+Deployed Server Link: https://jae-city-explorer.herokuapp.com/
+
 ## Roadmap
 Here we can see how the programming changed as we went through the different steps in the build-out of this site. 
 
