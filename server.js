@@ -16,6 +16,7 @@ const PORT = process.env.PORT || 3001;
 // Bringing In Modules
 let handleWeather = require('./modules/weather.js');
 let handleMovies = require('./modules/movies.js');
+let handleError = require('./modules/error.js');
 
 // Set Routes
 app.get('/', (request, response) => response.status(200).send('This is the root. It works!'));
@@ -27,9 +28,7 @@ app.get('/movies', handleMovies);
 // This sets up the movies route.
 
 // No routes match error
-app.get('*', (request, response) => {
-  response.status(404).send('Page not found. Sorry :(');
-});
+app.get('*', handleError);
 
 
 // App.Listen aka making sure the port is set up.
