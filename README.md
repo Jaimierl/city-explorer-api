@@ -11,6 +11,9 @@ Here we can see how the programming changed as we went through the different ste
 
 ![WRRC Overview](data/WRRC2.png)
 
+Then we added Caching so the server was updated to the following:
+![WRRC Overview](data/WRRC4.png)
+
 ## Overview
 Creating a local backend server for the City Explorer App
 

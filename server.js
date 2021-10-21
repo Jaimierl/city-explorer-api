@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 3001;
 // End Boiler Plate (This plus the app.listen)
 
 // Bringing In Modules
+let cache = require('./modules/cache.js');
 let handleWeather = require('./modules/weather.js');
 let handleMovies = require('./modules/movies.js');
 let handleError = require('./modules/error.js');
